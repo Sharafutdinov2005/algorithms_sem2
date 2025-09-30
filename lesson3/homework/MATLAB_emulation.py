@@ -101,7 +101,6 @@ class CalculationGraph(Vertex):
         self,
     ) -> None:
         for vertex in self._calc_order:
-            print(vertex)
             for edge in self._adjacency_list[vertex]:
                 out_value = self._vertex[edge.out_vertex_id].get_output(
                     edge.out_port_id
@@ -163,7 +162,6 @@ class CalculationGraph(Vertex):
                 DFS(v)
 
         self._calc_order = self._calc_order
-        print(self._calc_order)
 
 
 class BinarySummator(Vertex):
