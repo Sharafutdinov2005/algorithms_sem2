@@ -161,8 +161,6 @@ class CalculationGraph(Vertex):
             if not visited[v]:
                 DFS(v)
 
-        self._calc_order = self._calc_order
-
 
 class BinarySummator(Vertex):
     _input = [None, None]
@@ -197,6 +195,10 @@ class BinarySummator(Vertex):
         self,
     ) -> None:
         self._output[0] = sum(self._input)
+
+
+class BinaryMultiplicator(Vertex):
+    ...
 
 
 if __name__ == "__main__":
