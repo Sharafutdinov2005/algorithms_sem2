@@ -26,11 +26,11 @@ class Solution:
     ) -> List[str]:
         itinerary = []
 
-        def dfs(city: str) -> None:
-            while city in graph and graph[city]:
-                next_city = graph[city].pop()
-                dfs(next_city)
-            itinerary.append(city)
+        def dfs(u: str):
+            while u in graph and graph[u]:
+                v = graph[u].pop()
+                dfs(v)
+            itinerary.append(u)
 
         dfs("JFK")
 

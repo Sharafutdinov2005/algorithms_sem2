@@ -11,7 +11,7 @@ class Solution:
             start = v
             if outs[v] > ins.get(v, -1):
                 break
-        return start  # in eiler graph exists cycle
+        return start  # in full eiler graph exists cycle
 
     def _build_adjacency_list_with_begining(
         self,
@@ -41,13 +41,13 @@ class Solution:
     ) -> List[int]:
         result_path = []
 
-        def DFS(node: int) -> None:
-            while graph.get(node) and graph[node]:
-                neighbor = graph[node].pop(0)
-                DFS(neighbor)
-                result_path.append([node, neighbor])
+        def dfs(v):
+            while graph.get(v) and graph[v]:
+                u = graph[v].pop(0)
+                dfs(u)
+                result_path.append([v, u])
 
-        DFS(start)
+        dfs(start)
 
         return result_path[::-1]
 
