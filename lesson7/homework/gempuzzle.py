@@ -4,21 +4,13 @@ from queue import PriorityQueue
 from typing import Deque, Dict, List, Set, Tuple
 
 
-class GemPuzzle:
+class _Core:
     """
-    Gem Puzzle console game class.
+    Core of GemPuzzle class.
 
-    It implements console interface for the 15 puzzle game,
-    reads start position and finds shortest sequense of steps to the final
-    position:
-
-    ``1   2   3   4``\n
-    ``5   6   7   8``\n
-    ``9   10  11  12``\n
-    ``13  14  15  0``
-
-    if it's possible.
+    It finds shortest path between start position and final position.
     """
+
     _god_number: int = 80  # max number of steps
 
     _start_position: Tuple[int]
@@ -32,11 +24,6 @@ class GemPuzzle:
     _parents: Dict[Tuple[int], Tuple[int]] = dict()
 
     _clozed: Set = set()
-
-    def __init__(
-        self,
-    ) -> None:
-        print("Welcome to the GemPuzzle console game!\n")
 
     @staticmethod
     def _is_solvable(
@@ -195,25 +182,6 @@ class GemPuzzle:
 
         return adjacnet
 
-    def _initialize_start_position(
-        self,
-    ) -> None:
-        """
-        Reads start position of the game.
-
-        Raises:
-            ValueError: if start position is unsolvable.
-        """
-        print("Set start position:")
-        start_position = []
-        for _ in range(4):
-            start_position += list(map(int, input().split()))
-
-        self._start_position = tuple(start_position)
-
-        if not self._is_solvable(self._start_position):
-            raise ValueError("Start position is unsolvable.")
-
     def _find_shortest_sequence(
         self,
     ) -> None:
@@ -228,8 +196,6 @@ class GemPuzzle:
 
         while not priority_q.empty():
             _, position = priority_q.get()
-
-            print(self._h(position))
 
             if self._is_solution(position):
                 return
@@ -258,6 +224,47 @@ class GemPuzzle:
             current_position = self._parents[current_position]
 
         return sequence
+
+
+class GemPuzzle(_Core):
+    """
+    Interface of Gem Puzzle console game.
+
+    It implements console interface for the core,
+    reads start position and finds shortest sequense of steps to the final
+    position:
+
+    ``1   2   3   4``\n
+    ``5   6   7   8``\n
+    ``9   10  11  12``\n
+    ``13  14  15  0``
+
+    if it's possible.
+    """
+
+    def __init__(
+        self,
+    ) -> None:
+        print("Welcome to the GemPuzzle console game!\n")
+
+    def _initialize_start_position(
+        self,
+    ) -> None:
+        """
+        Reads start position of the game.
+
+        Raises:
+            ValueError: if start position is unsolvable.
+        """
+        print("Set start position:")
+        start_position = []
+        for _ in range(4):
+            start_position += list(map(int, input().split()))
+
+        self._start_position = tuple(start_position)
+
+        if not self._is_solvable(self._start_position):
+            raise ValueError("Start position is unsolvable.")
 
     @staticmethod
     def _print_position(
