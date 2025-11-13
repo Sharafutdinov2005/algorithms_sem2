@@ -21,9 +21,17 @@ class _Core:
         13, 14, 15, 0,
     )
 
-    _parents: Dict[Tuple[int], Tuple[int]] = dict()
+    _parents: Dict[Tuple[int], Tuple[int]]
+    _clozed: Set[Tuple[int]]
 
-    _clozed: Set = set()
+    def __init__(
+        self
+    ) -> None:
+        """
+        Constructs `_Core` object.
+        """
+        self._parents = dict()
+        self._clozed = set()
 
     @staticmethod
     def _is_solvable(
@@ -245,6 +253,9 @@ class GemPuzzle(_Core):
     def __init__(
         self,
     ) -> None:
+        """
+        Constructs `GemPuzzle` object.
+        """
         print("Welcome to the GemPuzzle console game!\n")
 
     def _initialize_start_position(
