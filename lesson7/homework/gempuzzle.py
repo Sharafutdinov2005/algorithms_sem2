@@ -256,6 +256,7 @@ class GemPuzzle(_Core):
         """
         Constructs `GemPuzzle` object.
         """
+        super().__init__()
         print("Welcome to the GemPuzzle console game!\n")
 
     def _initialize_start_position(
