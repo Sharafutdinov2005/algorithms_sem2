@@ -198,6 +198,8 @@ class _Core:
         Function represents positions like points in the graph,
         and finds shirtest way between start and finish using A-star algorithm.
 
+        It counts durtion of algorithm.
+
         Returns:
             float: duration of algorithm in seconds.
         """
