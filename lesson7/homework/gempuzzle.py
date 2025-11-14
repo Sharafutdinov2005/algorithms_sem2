@@ -1,6 +1,7 @@
 from collections import deque
 from math import inf
 from queue import PriorityQueue
+from time import time
 from typing import Deque, Dict, List, Set, Tuple
 
 
@@ -192,21 +193,26 @@ class _Core:
 
     def _find_shortest_sequence(
         self,
-    ) -> None:
+    ) -> float:
         """
         Function represents positions like points in the graph,
         and finds shirtest way between start and finish using A-star algorithm.
+
+        Returns:
+            float: duration of algorithm in seconds.
         """
         priority_q = PriorityQueue()
         priority_q.put((self._h(self._start_position), self._start_position))
 
         g = {self._start_position: 0}
+        start = time()
 
         while not priority_q.empty():
             _, position = priority_q.get()
 
             if self._is_solution(position):
-                return
+                end = time()
+                return end - start
             self._clozed.add(position)
             for neighbour in self._get_neighbours(position):
                 g_new = g[position] + 1
@@ -214,6 +220,8 @@ class _Core:
                     priority_q.put((g_new + self._h(neighbour), neighbour))
                     g[neighbour] = g_new
                     self._parents[neighbour] = position
+
+        raise RuntimeError("Anomaly in A* angorithm.")
 
     def _get_sequense_from_parents(
         self,
@@ -286,7 +294,7 @@ class GemPuzzle(_Core):
         Prints position to the console.
 
         Args:
-            position (Tuple[int]): _description_
+            position (Tuple[int]): position of the game
         """
         for i in range(4):
             for j in range(4):
@@ -296,12 +304,17 @@ class GemPuzzle(_Core):
 
     def _print_winning_sequence(
         self,
+        duration: float
     ) -> None:
         """
         Prints to console sequence of positions, led to the winning position.
+
+        Args:
+            duration (float): duration of algorithm in seconds.
         """
         sequence = self._get_sequense_from_parents()
         print(
+            f"\nSolution is found for {round(duration, 2)} s."
             f"\nIt took {len(sequence)} steps out of "
             f"{self._god_number} (maximum):\n"
         )
@@ -320,9 +333,9 @@ class GemPuzzle(_Core):
         """
         self._initialize_start_position()
 
-        self._find_shortest_sequence()
+        duration = self._find_shortest_sequence()
 
-        self._print_winning_sequence()
+        self._print_winning_sequence(duration)
 
 
 if __name__ == "__main__":
