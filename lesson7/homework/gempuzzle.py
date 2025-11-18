@@ -223,8 +223,6 @@ class _Core:
                     g[neighbour] = g_new
                     self._parents[neighbour] = position
 
-        raise RuntimeError("Anomaly in A* angorithm.")
-
     def _get_sequense_from_parents(
         self,
     ) -> Deque[Tuple[int]]:
