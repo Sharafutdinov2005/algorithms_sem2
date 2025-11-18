@@ -299,8 +299,7 @@ class GemPuzzle(_Core):
         for i in range(4):
             for j in range(4):
                 print(position[i * 4 + j], end=" ")
-            print()
-        print()
+            print("\n")
 
     def _print_winning_sequence(
         self,
